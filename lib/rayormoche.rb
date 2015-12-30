@@ -16,6 +16,6 @@ module Rayormoche
   def self.apply name
     app = Application.new name
     yield app
-    app.execute ARGV
+    app.run ARGV
   end
 end

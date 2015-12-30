@@ -1,19 +1,19 @@
 #
-require 'reyormoche/version'
+require_relative 'lib/rayormoche/version'
 
-Gem::Specification.new do |reyormoche|
-  reyormoche.name          = 'reyormoche'
-  reyormoche.version       = Rayormoche::VERSION
-  reyormoche.license       = 'MIT'
+Gem::Specification.new do |rayormoche|
+  rayormoche.name          = 'rayormoche'
+  rayormoche.version       = Rayormoche::VERSION
+  rayormoche.license       = 'MIT'
 
-  reyormoche.summary       = "A lightweight library for writing command line app"
-  reyormoche.description   = "Rayormoche is a lightweight library for writing command line app in Ruby."
+  rayormoche.summary       = "A lightweight library for writing command line app"
+  rayormoche.description   = "Rayormoche is a lightweight library for writing command line app in Ruby."
 
-  reyormoche.authors       = ["Esphas Kueen"]
-  reyormoche.email         = 'esphas@hotmail.com'
-  reyormoche.homepage      = 'https://github.com/esphas/reyormoche'
+  rayormoche.authors       = ["Esphas Kueen"]
+  rayormoche.email         = 'esphas@hotmail.com'
+  rayormoche.homepage      = 'https://github.com/esphas/rayormoche'
 
-  reyormoche.require_paths = ['lib']
-  reyormoche.files         = Dir["**/*"].grep(/^(bin|lib)\//)
-  reyormoche.executables   = reyormoche.files.grep(/^bin\//){|n| File.basename n}
+  rayormoche.require_paths = ['lib']
+  rayormoche.files         = Dir["**/*"].grep(/^(bin|lib)\//)
+  rayormoche.executables   = rayormoche.files.grep(/^bin\//){|n| File.basename n}
 end
