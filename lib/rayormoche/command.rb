@@ -8,9 +8,12 @@
 module Rayormoche
   class Command
 
+    LoggerLevel          = Logger::INFO
     DefaultSyntax        = "<command> [commands] [options]"
     InfoCommandNameExist = "Command Name Already Exist!"
-    LoggerLevel          = Logger::INFO
+    InfoOptionKeyExist   = "Option Key Already Exist!"
+    RunSubcommandFound   = "Found subcommand: "
+    RunWithArguments     = "No subcommand found, execute with current arguments: "
 
     attr_reader :name, :parent, :aliases
     attr_accessor :description, :syntax
@@ -25,7 +28,6 @@ module Rayormoche
       @syntax      = DefaultSyntax
       @commands    = {}
       @options     = {}
-      add_default_options
     end
     ##
     # Get the fullname of the command.
@@ -37,7 +39,10 @@ module Rayormoche
     ##
     # Get a logger
     def logger level = LoggerLevel
-      # TODO:
+      return @logger if @logger
+      @logger = Logger.new STDOUT
+      @logger.level = level
+      @logger
     end
 
     ##
@@ -96,15 +101,10 @@ module Rayormoche
     # Getter of option, create if not exist.
     def option optkey, *optinfo
       optkey = normalize optkey
+      logger.info InfoOptionKeyExist if @options[optkey]
       @options[optkey] = Option.new optkey, optinfo
       yield @commands[optkey] if block_given?
       @options[optkey]
-    end
-
-    ##
-    # Add default options to the command.
-    def add_default_options
-      # TODO: -h, --help
     end
 
     ##
@@ -115,16 +115,36 @@ module Rayormoche
 
     ##
     # Set the action of the command, receives a block.
-    # The ARGV (Array) will be passed to the action as the first parameter.
-    # Parsed arguments of options (Hash) will be passed to the action as the second parameter.
+    # Parsed arguments of options (Hash) will be passed to the action as parameter.
     def action &actprc
       @action = actprc
     end
 
     ##
+    # Setup Option Parser
+    def parse_options argv
+      result = {}
+      OptionParser.new do |opts|
+        @options.each_value do |option|
+          opts.on *option.switches do |sr|
+            result[option.key] = sr
+          end
+        end
+      end.parse! argv
+      result
+    end
+
+    ##
     # Run the command or one of its subcommands.
-    def run argv = [], options = {}
-      # TODO:
+    def run argv = []
+      if has_command? argv[0]
+        cmd = command[argv.shift]
+        logger.debug RunSubcommandFound + cmd.name
+        cmd.run argv
+      else
+        logger.debug RunWithArguments + argv.inspect
+        @action.call parse_options argv
+      end
     end
   end
 end
