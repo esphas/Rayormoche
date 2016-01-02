@@ -48,7 +48,7 @@ module Rayormoche
     ##
     # Normalize names.
     def normalize name
-      strname = name.to_s
+      strname = name.to_s.dup
       strname.downcase!
       strname.gsub! /_/, ?-
       strname.gsub! /^-+|-+$/, ""
@@ -99,10 +99,10 @@ module Rayormoche
 
     ##
     # Getter of option, create if not exist.
-    def option optkey, *optinfo
+    def option optkey, *switches
       optkey = normalize optkey
       logger.info InfoOptionKeyExist if @options[optkey]
-      @options[optkey] = Option.new optkey, optinfo
+      @options[optkey] = Option.new optkey, switches
       yield @commands[optkey] if block_given?
       @options[optkey]
     end
@@ -138,9 +138,9 @@ module Rayormoche
     # Run the command or one of its subcommands.
     def run argv = []
       if has_command? argv[0]
-        cmd = command[argv.shift]
-        logger.debug RunSubcommandFound + cmd.name
-        cmd.run argv
+        subcommand = @commands[normalize argv.shift]
+        logger.debug RunSubcommandFound + subcommand.name.to_s
+        subcommand.run argv
       else
         logger.debug RunWithArguments + argv.inspect
         @action.call parse_options argv
