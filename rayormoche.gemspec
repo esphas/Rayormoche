@@ -1,5 +1,8 @@
-#
-require_relative 'lib/rayormoche/version'
+
+lib = File.expand_path '../lib', __FILE__
+$:.unshift lib unless $:.include? lib
+
+require 'rayormoche/version'
 
 Gem::Specification.new do |rayormoche|
   rayormoche.name          = 'rayormoche'
