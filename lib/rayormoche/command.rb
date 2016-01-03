@@ -80,7 +80,7 @@ class Rayormoche::Command
   def command cmdname
     cmdname = normalize cmdname
     logger.info InfoCommandNameExist if @commands[cmdname]
-    @commands[cmdname] = Command.new cmdname, self
+    @commands[cmdname] = Rayormoche::Command.new cmdname, self
     yield @commands[cmdname] if block_given?
     @commands[cmdname]
   end
@@ -102,7 +102,7 @@ class Rayormoche::Command
   def option optkey, *switches
     optkey = normalize optkey
     logger.info InfoOptionKeyExist if @options[optkey]
-    @options[optkey] = Option.new optkey, switches
+    @options[optkey] = Rayormoche::Option.new optkey, switches
     yield @options[optkey] if block_given?
     @options[optkey]
   end
