@@ -1,28 +1,4 @@
 
 *.gem
-*.rbc
-
-.dat*
-.rvmrc
-.ruby-gemset
-.ruby-version
-.repl_history
 
 Gemfile.lock
-
-/tmp/
-/pkg/
-/doc/
-/rdoc/
-/build/
-/.config
-/.yardoc/
-/_yardoc/
-/.bundle/
-/coverage/
-/test/tmp/
-/spec/reports/
-/vendor/bundle
-/InstalledFiles
-/lib/bundler/man/
-/test/version_tmp/
