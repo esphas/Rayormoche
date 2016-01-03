@@ -1,12 +1,11 @@
+##
 # Rayormoche Application
-module Rayormoche
-  class Application < Command
+class Rayormoche::Application < Rayormoche::Command
 
-    ##
-    # Initialize an application with a name
-    def initialize appname
-      super appname, nil
-      # TODO: 
-    end
+  ##
+  # Initialize an application with a name
+  def initialize appname
+    super appname, nil
+    # TODO:
   end
 end

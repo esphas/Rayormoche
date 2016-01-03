@@ -8,11 +8,8 @@ module Rayormoche
   autoload :Command,     'rayormoche/command'
   autoload :Option,      'rayormoche/option'
 
-  # Public: Setup a new application and run.
-  #
-  # name - the name of the application
-  #
-  # Returns nil.
+  ##
+  # Setup a new application and run.
   def self.apply name
     app = Application.new name
     yield app
