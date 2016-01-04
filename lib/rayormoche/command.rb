@@ -3,15 +3,20 @@
 #
 # A command has subcommands, options, arguments, an action and some other attributes that matter less.
 #
-# So a Command has subcommands:Command, options:Option, arguments along with Option,
+# So a Rayormoche::Command has subcommands:Command, options:Option, arguments along with Option,
 # an action and some other attributes.
 class Rayormoche::Command
 
   DefaultSyntax        = "<command> [commands] [options]"
-  InfoCommandNameExist = "Command Name Already Exist!"
-  InfoOptionKeyExist   = "Option Key Already Exist!"
+  # Debug
   RunSubcommandFound   = "Found subcommand: "
   RunWithArguments     = "No subcommand found, execute with current arguments: "
+  ParseOptionSuccess   = "Successfully parsed arguments, [options, args]: "
+  # Warn
+  WarnCommandNameExist = "Command Name Already Exist!"
+  WarnOptionKeyExist   = "Option Key Already Exist!"
+  # Error
+  ErrorInvalidOption   = "<command>: unknown switch '<error>'"
 
   attr_reader :name, :parent, :aliases
   attr_accessor :description, :syntax
@@ -118,6 +123,11 @@ class Rayormoche::Command
   end
 
   ##
+  # TODO: present Usage
+  def usage
+  end
+
+  ##
   # Set the action of the command, receives a block.
   # Parsed arguments of options (Hash) will be passed to the action as the first parameter.
   # Remaining unparsed arguments (Array) will be passed to the action as the second parameter.
@@ -129,13 +139,19 @@ class Rayormoche::Command
   # Setup Option Parser
   def parse_options argv
     result = {}
-    OptionParser.new do |opts|
-      @options.each_value do |option|
-        opts.on *option.switches do |sr|
-          result[option.key] = sr
-        end
-      end
-    end.parse! argv
+    opts = OptionParser.new do |opts|
+      @options.each_value do |option| opts.on *option.switches do |rv| result[option.key] = rv end end
+    end
+    begin
+      opts.parse! argv
+    rescue OptionParser::InvalidOption => e
+      logger.error ErrorInvalidOption
+      logger.error e.message
+      logger.error usage
+      abort
+    end
+    logger.debug ParseOptionSuccess
+    logger.debug [result, argv].inspect
     [result, argv]
   end
 
