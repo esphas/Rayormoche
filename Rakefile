@@ -1,6 +1,26 @@
 
-task default: %w[ test_rayormoche ]
+task :default => %w[ greeter ]
 
-task :test_rayormoche do
-  ruby 'test/test_rayormoche.rb', 'greet', '-n', 'Esphas'
+task :greeter do
+  ruby 'test/sample_greeter.rb', 'meet', 'Esphas'
+  puts
+  ruby 'test/sample_greeter.rb', 'meet', '-f', 'Esphas'
+  puts
+  ruby 'test/sample_greeter.rb', 'meet', 'Esphas'
+  puts
+  ruby 'test/sample_greeter.rb', 'unfriend', 'Esphas'
+  puts
+  ruby 'test/sample_greeter.rb', 'meet', 'Esphas'
+  puts
+  ruby 'test/sample_greeter.rb', 'friend', 'Esphas'
+  puts
+  ruby 'test/sample_greeter.rb', 'meet', 'Esphas'
+  puts
+  ruby 'test/sample_greeter.rb', 'unfriend', 'Esphas'
+  puts
+  ruby 'test/sample_greeter.rb', 'make-friend', 'Esphas'
+  puts
+  ruby 'test/sample_greeter.rb', 'meet', 'Esphas'
+  puts
+  ruby 'test/sample_greeter.rb', 'unfriend', 'Esphas'
 end
