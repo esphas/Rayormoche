@@ -22,6 +22,10 @@ class Rayormoche::Application < Rayormoche::Command
     return @logger if @logger
     @logger = Logger.new STDOUT
     @logger.level = LoggerLevel
+    @logger.formatter = proc do |severity, _, _, msg|
+      insert = severity == 'ERROR' ? ?: : [?\s, severity.downcase, ?:, ?\n, ?\s].join
+      [fullname, insert, ?\s, msg.to_s, ?\n].join
+    end
     @logger
   end
 end
