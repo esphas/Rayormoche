@@ -59,7 +59,7 @@ class Rayormoche::Command
   # Alias a command name to be attached to the parent command for self.
   def alias aliasname
     aliasname = normalize aliasname
-    logger.info InfoCommandNameExist if @parent.has_command? aliasname
+    logger.warn WarnCommandNameExist if @parent.has_command? aliasname
     @aliases.push aliasname
   end
 
@@ -79,7 +79,7 @@ class Rayormoche::Command
   # Create new subcommand.
   def command cmdname
     cmdname = normalize cmdname
-    logger.info InfoCommandNameExist if @commands[cmdname]
+    logger.warn WarnCommandNameExist if @commands[cmdname]
     @commands[cmdname] = Rayormoche::Command.new cmdname, self
     yield @commands[cmdname] if block_given?
     @commands[cmdname]
@@ -109,7 +109,7 @@ class Rayormoche::Command
   # Getter of option, create if not exist.
   def option optkey, *switches
     optkey = normalize optkey
-    logger.info InfoOptionKeyExist if @options[optkey]
+    logger.warn WarnOptionKeyExist if @options[optkey]
     @options[optkey] = Rayormoche::Option.new optkey, switches
     yield @options[optkey] if block_given?
     @options[optkey]
