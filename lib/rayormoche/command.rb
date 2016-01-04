@@ -7,7 +7,6 @@
 # an action and some other attributes.
 class Rayormoche::Command
 
-  LoggerLevel          = Logger::INFO
   DefaultSyntax        = "<command> [commands] [options]"
   InfoCommandNameExist = "Command Name Already Exist!"
   InfoOptionKeyExist   = "Option Key Already Exist!"
@@ -37,12 +36,9 @@ class Rayormoche::Command
   end
 
   ##
-  # Get a logger
-  def logger level = LoggerLevel
-    return @logger if @logger
-    @logger = Logger.new STDOUT
-    @logger.level = level
-    @logger
+  # Get a logger, requires parent logger
+  def logger
+    @parent.logger
   end
 
   ##

@@ -7,9 +7,21 @@
 # For more details, see Rayormoche::Command.
 class Rayormoche::Application < Rayormoche::Command
 
+  LoggerLevel = Logger::INFO
+
   ##
   # Initialize an application with a name
   def initialize appname
     super appname, nil
+  end
+
+  ##
+  # Get a logger
+  # The logger in Application is the only original logger.
+  def logger
+    return @logger if @logger
+    @logger = Logger.new STDOUT
+    @logger.level = LoggerLevel
+    @logger
   end
 end
