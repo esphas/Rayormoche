@@ -16,7 +16,8 @@ class Rayormoche::Command
   WarnCommandNameExist = "Command Name Already Exist!"
   WarnOptionKeyExist   = "Option Key Already Exist!"
   # Error
-  ErrorInvalidOption   = "<command>: unknown switch '<error>'"
+  ErrorInvalidOption   = "0x0 we cannot understand your command: "
+  ErrorNoAction        = "0w0 there is no action specified with this command"
 
   attr_reader :name, :parent, :aliases
   attr_accessor :description, :syntax
@@ -36,7 +37,7 @@ class Rayormoche::Command
   ##
   # Get the fullname of the command.
   def fullname
-    pre = @parent ? @parent.fullname + 32.chr : ""
+    pre = @parent ? @parent.fullname + ?\s : ""
     pre + @name.to_s
   end
 
@@ -73,7 +74,7 @@ class Rayormoche::Command
   ##
   # Get a one-line summury of the command.
   def summury
-    32.chr * 2 + names.join(?,+32.chr).ljust(20) + 32.chr * 2 + @description
+    ?\s * 2 + names.join(?, + ?\s).ljust(20) + ?\s * 2 + @description
   end
 
   ##
@@ -145,9 +146,7 @@ class Rayormoche::Command
     begin
       opts.parse! argv
     rescue OptionParser::InvalidOption => e
-      logger.error ErrorInvalidOption
-      logger.error e.message
-      logger.error usage
+      logger.error [ErrorInvalidOption, ?\n, ?\t, e.message, ?\n, usage].join
       abort
     end
     logger.debug ParseOptionSuccess
@@ -163,6 +162,10 @@ class Rayormoche::Command
       logger.debug RunSubcommandFound + subcommand.name.to_s
       subcommand.run argv
     else
+      if @action.nil?
+        logger.error ErrorNoAction
+        abort
+      end
       logger.debug RunWithArguments + argv.inspect
       options, args = parse_options argv
       @action.call options, args
