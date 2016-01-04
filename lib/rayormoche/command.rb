@@ -86,6 +86,14 @@ class Rayormoche::Command
   end
 
   ##
+  # Get subcommand via name or alias
+  def get_command cmdname
+    @commands.each_value do |cmd|
+      return cmd if cmd.names.include? cmdname
+    end
+  end
+
+  ##
   # Get a list of all subcommands.
   def commands
     @commands.values.map &:names
@@ -115,7 +123,8 @@ class Rayormoche::Command
 
   ##
   # Set the action of the command, receives a block.
-  # Parsed arguments of options (Hash) will be passed to the action as parameter.
+  # Parsed arguments of options (Hash) will be passed to the action as the first parameter.
+  # Remaining unparsed arguments (Array) will be passed to the action as the second parameter.
   def action &actprc
     @action = actprc
   end
@@ -131,19 +140,20 @@ class Rayormoche::Command
         end
       end
     end.parse! argv
-    result
+    [result, argv]
   end
 
   ##
   # Run the command or one of its subcommands.
   def run argv = []
     if has_command? argv[0]
-      subcommand = @commands[normalize argv.shift]
+      subcommand = get_command normalize argv.shift
       logger.debug RunSubcommandFound + subcommand.name.to_s
       subcommand.run argv
     else
       logger.debug RunWithArguments + argv.inspect
-      @action.call parse_options argv
+      options, args = parse_options argv
+      @action.call options, args
     end
   end
 end
