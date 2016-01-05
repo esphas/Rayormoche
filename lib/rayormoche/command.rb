@@ -52,7 +52,7 @@ class Rayormoche::Command
   #
   # @return [Symbol] the normalized name that is used in the *Application* and *Command* class
   def normalize name
-    name.to_s.downcase.to_sym
+    name.to_s.downcase.gsub(?_, ?-).to_sym
   end
 
   # Alias a command name to be attached to the parent command for self.
