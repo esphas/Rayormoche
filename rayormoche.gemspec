@@ -1,8 +1,5 @@
 
-lib = File.expand_path '../lib', __FILE__
-$:.unshift lib unless $:.include? lib
-
-require 'rayormoche/version'
+require File.expand_path '../lib/rayormoche/version', __FILE__
 
 Gem::Specification.new do |rayormoche|
   rayormoche.name          = 'rayormoche'
@@ -22,4 +19,6 @@ Gem::Specification.new do |rayormoche|
 
   rayormoche.add_development_dependency 'bundler'
   rayormoche.add_development_dependency 'rake'
+
+  rayormoche.required_ruby_version = '>= 1.9.3'
 end

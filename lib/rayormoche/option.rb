@@ -1,6 +1,3 @@
-##
-# Rayormoche Option
-#
 # A option defines a certain argument, and has one or more switches, a return value and so on.
 #
 # So a Rayormoche::Option has a key:Symbol, which specify the Option uniquely under its parent Command.
@@ -10,13 +7,14 @@ class Rayormoche::Option
 
   attr_reader :key, :switches
 
-  ##
   # Initialize the Option with a name and a description
-  def initialize optkey, switches
+  #
+  # @param optkey [Symbol, String] the key that identify the option
+  # @param *switches [String] the switches used for *OptionParser*
+  def initialize optkey, *switches
     @key = optkey
     @switches = switches
   end
 
-  ##
   # TODO: present option in a readable way, something like instructions maybe
 end
