@@ -1,9 +1,9 @@
-# An application behaves similarly to a command, so *Rayormoche::Application* takes *Rayormoche::Command* as superclass.
+# An application behaves similarly to a command, so *Rayormoche*::*Application* takes *Rayormoche*::*Command* as superclass.
 #
-# Unlike normal *Command*s, an *Application* does not have parent command,
+# Unlike normal Commands, an *Application* does not have parent command,
 # which means what does an *Application* name does not really matter.
 #
-# For more details, see *Rayormoche::Command*.
+# For more details, see *Rayormoche*::*Command*.
 class Rayormoche::Application < Rayormoche::Command
 
   LoggerLevel = Logger::INFO
@@ -18,8 +18,8 @@ class Rayormoche::Application < Rayormoche::Command
 
   # Get a logger.
   #
-  # @note The *logger* in *Rayormoche::Command* will simply call its parent's *logger*,
-  #  which makes the logger created in *Rayormoche::Application* the only logger.
+  # @note The *logger* in *Rayormoche*::*Command* will simply call its parent's *logger*,
+  #  which makes the logger created in *Rayormoche*::*Application* the only logger.
   #
   # @note The *logger* is a standard ruby library.
   #
