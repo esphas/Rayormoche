@@ -14,6 +14,7 @@ class Rayormoche::Command
   WarnOptionKeyExist   = "Option Key Already Exist!"
 
   ErrorInvalidOption   = "0x0 we cannot understand your command: "
+  ErrorMissingArgument = "0x0 you seemed to have missed something: "
   ErrorNoAction        = "0w0 there is no action specified with this command"
 
   attr_reader :name
@@ -178,6 +179,9 @@ class Rayormoche::Command
       opts.parse! argv
     rescue OptionParser::InvalidOption => e
       logger.error [ErrorInvalidOption, ?\n, ?\t, e.message, ?\n, usage].join
+      abort
+    rescue OptionParser::MissingArgument => e
+      logger.error [ErrorMissingArgument, ?\n, ?\t, e.message, ?\n, usage].join
       abort
     end
     logger.debug ParseOptionSuccess

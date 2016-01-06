@@ -1,3 +1,3 @@
 module Rayormoche
-  VERSION = '0.1.8r1'
+  VERSION = '0.1.9'
 end

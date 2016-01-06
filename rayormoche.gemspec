@@ -14,11 +14,10 @@ Gem::Specification.new do |rayormoche|
   rayormoche.homepage      = 'https://github.com/esphas/rayormoche'
 
   rayormoche.require_paths = ['lib']
-  rayormoche.files         = Dir['**/*'].grep(/^(bin|lib)\//)
-  rayormoche.executables   = rayormoche.files.grep(/^bin\//){|n| File.basename n}
+  rayormoche.files         = Dir['lib/**/*'].reject{|d| FileTest.directory? d}
 
-  rayormoche.add_development_dependency 'bundler'
-  rayormoche.add_development_dependency 'rake'
+  rayormoche.add_development_dependency 'bundler', '~> 1'
+  rayormoche.add_development_dependency 'rake', '>= 0'
 
   rayormoche.required_ruby_version = '>= 1.9.3'
 end
