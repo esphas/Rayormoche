@@ -129,7 +129,7 @@ class Rayormoche::Command
   #
   # @param (see Rayormoche::Option#initialize)
   #
-  # @note The *optparse* is a standard ruby library.
+  # @note *optparse* is Ruby's built-in.
   #
   # @return [Rayormoche::Option] the option created
   def option optkey, *switches

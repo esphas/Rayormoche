@@ -21,7 +21,7 @@ class Rayormoche::Application < Rayormoche::Command
   # @note The *logger* in *Rayormoche*::*Command* will simply call its parent's *logger*,
   #  which makes the logger created in *Rayormoche*::*Application* the only logger.
   #
-  # @note The *logger* is a standard ruby library.
+  # @note *logger* is Ruby's built-in.
   #
   # @return [Logger] a logger that outputs to *STDOUT*
   def logger
